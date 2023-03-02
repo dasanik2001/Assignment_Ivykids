@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 var bodyParser = require('body-parser');
 const path = require('path');
-
+const options = require('./helpers/corsOptions')
 const MONGODB_URL = 'mongodb+srv://admin:admin@portify.fpzijgb.mongodb.net/assignment'
 
 const app = express();
@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'build')))
 
-app.use(cors({ origin: true }));
+app.use(cors(options));
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
