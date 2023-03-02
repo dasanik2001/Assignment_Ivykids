@@ -8,11 +8,8 @@ const MONGODB_URL = 'mongodb+srv://admin:admin@portify.fpzijgb.mongodb.net/assig
 const app = express();
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, 'build')))
 
-app.use(
-    "/build",
-    express.static(__dirname)
-);
 app.use(cors({ origin: true }));
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
