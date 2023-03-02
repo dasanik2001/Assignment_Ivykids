@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 var bodyParser = require('body-parser');
+const path = require('path');
 
 const MONGODB_URL = 'mongodb+srv://admin:admin@portify.fpzijgb.mongodb.net/assignment'
 
