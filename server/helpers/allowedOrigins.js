@@ -1,7 +1,8 @@
 const allowedOrigins = [
 
 
-    'https://assignmentivykids-production.up.railway.app/'
+    'https://assignmentivykids-production.up.railway.app/',
+    'https://localhost:5001'
 
 ];
 
