@@ -4,8 +4,8 @@ const cors = require("cors");
 var bodyParser = require('body-parser');
 const path = require('path');
 const options = require('./helpers/corsOptions')
-const MONGODB_URL = 'mongodb+srv://admin:admin@portify.fpzijgb.mongodb.net/assignment'
-
+const dotenv = require('dotenv')
+dotenv.config()
 const app = express();
 app.use(express.json());
 
@@ -21,7 +21,7 @@ app.use(function (req, res, next) {
 
 //database
 mongoose
-    .connect(MONGODB_URL, {
+    .connect(process.env.MONGO_URL, {
         useNewUrlParser: true,
     })
     .then(() => console.log("database connected successfully"))

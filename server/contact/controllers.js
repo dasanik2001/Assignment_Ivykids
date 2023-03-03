@@ -1,10 +1,10 @@
-const ContactDetails = require('./contactSchema')
+const contactDetails = require('./contactSchema')
 
 exports.AddContact = async (req, res) => {
     try {
         const { data } = req.body
         console.log(data)
-        const t = await ContactDetails.updateOne({ uid: data.uid }, {
+        const t = await contactDetails.updateOne({ uid: data.uid }, {
             $push: {
                 "contact": {
                     name: data.name,
@@ -26,7 +26,7 @@ exports.getallContacts = async (req, res) => {
     try {
         const { uid } = req.params
         console.log(uid)
-        const t = await ContactDetails.findOne({ uid: uid })
+        const t = await contactDetails.findOne({ uid: uid })
         console.log(t)
         res.send({ code: 200, data: t.contact, msg: 'Data Fetched Succesfully!' })
 
@@ -50,7 +50,7 @@ exports.UpdateContact = async (req, res) => {
                 "contact.$.type": data.type, "contact.$.contact": data.contact,
             }
         };
-        const t = await ContactDetails.updateOne(query, updateDocument
+        const t = await contactDetails.updateOne(query, updateDocument
         )
         console.log(t)
         res.send({ code: 200, data: true, msg: 'Contact Modified Sucesfully!!' })
@@ -66,7 +66,7 @@ exports.deleteContact = async (req, res) => {
         console.log(data.contact)
         const query = { uid: data.uid, "contact.name": data.contact.name };
         const updateDocument = { $pull: { contact: { contact: data.contact.contact, } } };
-        const t = await ContactDetails.updateOne(query, updateDocument
+        const t = await contactDetails.updateOne(query, updateDocument
         )
         console.log(t)
         res.send({ code: 200, data: true, msg: 'Contact Deleted Sucesfully!!' })

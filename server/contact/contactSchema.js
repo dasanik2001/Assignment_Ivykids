@@ -9,14 +9,14 @@ const contactDetails = mongoose.Schema(
             type: String,
             required: [true, "uid is required"],
             trim: true,
-            unique: true,
+            // unique: true,
 
         },
         contact: {
             type: Array,
-            required: [true, "Contact Details is required"],
+            default: []
         }
     }
 );
 
-module.exports = mongoose.model("ContactDetails", contactDetails);
+module.exports = mongoose.model("contactDetails", contactDetails);

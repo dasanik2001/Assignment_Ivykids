@@ -1,5 +1,5 @@
 const UserDetails = require('./userSchema')
-const ContactDetails = require('../contact/contactSchema')
+const contactDetails = require('../contact/contactSchema')
 
 exports.UserLogin = async (req, res) => {
     try {
@@ -40,14 +40,25 @@ exports.UserRegister = async (req, res) => {
             email: email,
             password: password
         }).save()
-
-        const c = await new ContactDetails({
-            uid: t._id,
+        console.log(t)
+        const userid = t._id.toString()
+        console.log(userid.toString())
+        await new contactDetails({
+            uid: userid,
             contact: []
         }).save()
+
         console.log('done')
         res.send({ code: 200, data: t, msg: 'User Created Succesfully!!' })
+
+
+        // console.log(t)
+
+        // console.log(c)
+
     } catch (error) {
+        console.log(error)
+
         res.send({ code: 500, msg: error.msg })
 
     }
