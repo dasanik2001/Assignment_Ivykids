@@ -2,7 +2,7 @@ import axios from "axios"
 
 const instsnce = axios.create({
 
-    baseURL: "http://localhost:5001"
+    baseURL: "https://assignment-backend.up.railway.app/"
 
 
 })
