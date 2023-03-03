@@ -11,7 +11,7 @@ const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
     const [user, setUser] = useState();
-    // const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     async function fetchUser() {
@@ -25,17 +25,15 @@ export function UserAuthContextProvider({ children }) {
             navigate('/dashboard/default')
         }
 
-        // setLoading(false);
+        setLoading(false);
     }
 
     async function userRegister(email, pass) {
         await userRegisterApi(email, pass).then((async (data) => {
-            // console.log(data)
             if (data)
                 return true
             else return false
-            // setUser(data)
-            // loginUserData = data
+
 
         }))
 
@@ -43,7 +41,6 @@ export function UserAuthContextProvider({ children }) {
 
     async function userLogin(email, pass) {
         let loginUserData
-        // console.log(email)
         await userLoginApi(email, pass).then((async (data) => {
             console.log(data)
             setUser(data)
@@ -69,14 +66,10 @@ export function UserAuthContextProvider({ children }) {
 
 
     }, []);
-    // useEffect(() => {
-    //     setInterval(() => setDateState(new Date()), 1000)
-    // }, [])
 
-    return (<userAuthContext.Provider value={{ user, setUser, resetUser, logout, userRegister, userLogin }}>{children}</userAuthContext.Provider>);
+    return (<userAuthContext.Provider value={{ user, setUser, resetUser, logout, userRegister, userLogin }}>{!loading && children}</userAuthContext.Provider>);
 }
 
 export function useUserAuth() {
-    // console.log("RESULT", userAuthContext);
     return useContext(userAuthContext);
 }

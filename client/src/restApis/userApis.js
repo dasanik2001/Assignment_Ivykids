@@ -19,8 +19,7 @@ const jwtLoginApi = async (accessToken) => {
         console.log(res.data)
         if (res.data.code === 200) {
             accessToken = res.data.data.accessToken;
-            // set the token into local storage
-            console.log("from generalAPi", res.data)
+            console.log("from generalAPi", res.data.data.accessToken)
             window.localStorage.setItem('accessToken', JSON.stringify(accessToken));
             return res.data.data.userData
         }
@@ -51,7 +50,8 @@ const userLoginApi = async (email, password) => {
         })
 
     if (res.data.code === 200) {
-        window.localStorage.setItem('accessToken', res.data.data._id)
+        let accessToken = res.data.data._id
+        window.localStorage.setItem('accessToken', JSON.stringify(accessToken));
         alertSuccess(res.data.msg)
         return res.data.data
 
@@ -114,4 +114,43 @@ const getContactsApi = async (uid) => {
         return false
     }
 }
-export { jwtLoginApi, getContactsApi, addContactApi, userLoginApi, userRegisterApi }
+const updateContactApi = async (data) => {
+    console.log(data)
+    const res = await axios.post('/contact/update',
+        {
+            data: data
+        })
+
+    if (res.data.code === 200) {
+        alertSuccess(res.data.msg)
+        return res.data.data
+
+    }
+    else {
+        alertFailure(res.data.msg)
+        return false
+    }
+}
+const deleteContactApi = async (contact, uid) => {
+    console.log(contact)
+    const res = await axios.post('/contact/delete',
+        {
+            data: {
+                'contact': contact,
+                'uid': uid
+            }
+        })
+
+    if (res.data.code === 200) {
+        alertSuccess(res.data.msg)
+        return res.data.data
+
+    }
+    else {
+        alertFailure(res.data.msg)
+        return false
+    }
+}
+
+
+export { jwtLoginApi, deleteContactApi, updateContactApi, getContactsApi, addContactApi, userLoginApi, userRegisterApi }

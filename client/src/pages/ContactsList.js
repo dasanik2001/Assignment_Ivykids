@@ -1,12 +1,17 @@
 import { Box, Button, Card, Icon, IconButton, TableBody, TableCell, TableHead, TableRow } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { useUserAuth } from '../contexts/UserAuthContextProvider'
-import { getContactsApi } from '../restApis/userApis'
+import { deleteContactApi, getContactsApi } from '../restApis/userApis'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router';
+import EditModal from './EditModal';
+import Swal from 'sweetalert2'
+
 const ContactsList = () => {
   const [contactList, setContactlist] = useState([])
+  const [currentContact, setCurrentContact] = useState('')
+  const [modalState, setModalState] = useState(false)
   const { user } = useUserAuth()
   const navigate = useNavigate()
   const getallContacts = async () => {
@@ -33,7 +38,13 @@ const ContactsList = () => {
         <Button onClick={getallContacts}>
           Refresh
         </Button>
-
+        {modalState && <EditModal
+          currentContact={currentContact}
+          modalState={modalState}
+          getallContacts={getallContacts}
+          setModalState={setModalState}
+          user={user}
+        />}
       </div>
       <div>
         <Card elevation={3}>
@@ -83,11 +94,31 @@ const ContactsList = () => {
 
 
                     <TableCell align="center" colSpan={1}>
-                      <EditIcon />
+                      <EditIcon onClick={() => {
+                        setCurrentContact(contact)
+                        setModalState(true)
+                      }} />
                     </TableCell>
 
                     <TableCell align="center" colSpan={1}>
-                      <DeleteIcon />
+                      <DeleteIcon onClick={
+                        () => {
+                          Swal.fire({
+                            icon: 'warning',
+                            text: 'Do you want to continue!',
+                            showCancelButton: true,
+                            confirmButtonText: 'Delete',
+                          }).then(async (result) => {
+                            if (result.isConfirmed)
+                              // alert('hi')
+                              console.log(contact)
+                            await deleteContactApi(contact, user._id).then(() => {
+                              getallContacts()
+                            })
+
+                          })
+                        }
+                      } />
                     </TableCell>
                   </TableRow>
                 ))}

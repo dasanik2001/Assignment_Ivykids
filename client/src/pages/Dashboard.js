@@ -43,8 +43,14 @@ const Dashboard = () => {
                     <Button onClick={handleLogout}> Log Out!!</Button>
 
                 </div>
+
             </div>
+            <div><h1 style={{ textAlign: "center" }}>Welcome to the Contacts Manager !!</h1>
+                <p style={{ textAlign: "center" }}>
+                    This Website is Built using MERN Stack for Assignment Purpose.
+                </p></div>
         </div>)
+
 }
 
 export default Dashboard
